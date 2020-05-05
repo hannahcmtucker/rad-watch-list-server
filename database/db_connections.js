@@ -15,7 +15,7 @@ const options = {
   max: process.env.DATABASE_MAX_CONNECTIONS || 2,
   user: username,
   password,
-  ssl: params.hostname !== 'localhost',
+  ssl: { rejectUnauthorized: false },
 }
 
 module.exports = pgp(options)
