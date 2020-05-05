@@ -1,0 +1,53 @@
+{
+  "name": "rad-watch-list-server",
+  "version": "1.0.0",
+  "description": "GraphQL endpoint for Rad Watch List project",
+  "main": "index.js",
+  "engines": {
+    "node": "^12.16.1",
+    "npm": "^6.13.4"
+  },
+  "scripts": {
+    "start": "nodemon ./index.js",
+    "start:prod": "node ./index.js",
+    "lint": "eslint --max-warnings 0 './**/*.js'",
+    "prettier": "prettier --write *.{js,json,md}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hannahcmtucker/rad-watch-list-server.git"
+  },
+  "author": "Hannah Tucker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hannahcmtucker/rad-watch-list-server/issues"
+  },
+  "homepage": "https://github.com/hannahcmtucker/rad-watch-list-server#readme",
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "es5"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^15.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.2",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
+    "nodemon": "^2.0.3",
+    "prettier": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
+}
