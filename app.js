@@ -5,7 +5,7 @@ const schema = require('./schema')
 require('dotenv').config()
 
 app.use(
-  '/graphql',
+  '/',
   expressGraphQL({
     schema,
     graphiql: true,

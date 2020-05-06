@@ -11,6 +11,7 @@ module.exports = {
   ],
   rules: {
     'import/no-unresolved': [2, { commonjs: true }],
+    'no-console': 'error',
   },
   parserOptions: {
     ecmaVersion: 2018,

@@ -6,8 +6,8 @@ const {
   GraphQLNonNull,
   GraphQLString,
 } = graphql
-const { getMovies, getMovieById } = require('../database/queries')
-const { getMovieSearchResults } = require('../api')
+const { getMovies, getMovie } = require('../database/queries')
+const { findMovies, findMovie } = require('../api')
 
 const MovieType = require('./movie_type')
 const MovieResultType = require('./movie_result_type')
@@ -15,24 +15,31 @@ const MovieResultType = require('./movie_result_type')
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: () => ({
-    movies: {
+    getMovies: {
       type: new GraphQLList(MovieType),
       resolve() {
         return getMovies()
       },
     },
-    movie: {
+    getMovie: {
       type: MovieType,
       args: { id: { type: new GraphQLNonNull(GraphQLID) } },
       resolve(parentValue, { id }) {
-        return getMovieById(id)
+        return getMovie(id)
       },
     },
-    movieSearchResults: {
+    findMovies: {
       type: new GraphQLList(MovieResultType),
-      args: { searchTerm: { type: new GraphQLNonNull(GraphQLString) } },
-      resolve(parentValue, { searchTerm }) {
-        return getMovieSearchResults(searchTerm)
+      args: { term: { type: new GraphQLNonNull(GraphQLString) } },
+      resolve(parentValue, { term }) {
+        return findMovies(term)
+      },
+    },
+    findMovie: {
+      type: MovieResultType,
+      args: { imdbID: { type: new GraphQLNonNull(GraphQLString) } },
+      resolve(parentValue, { imdbID }) {
+        return findMovie(imdbID)
       },
     },
   }),

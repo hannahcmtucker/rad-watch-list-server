@@ -7,6 +7,8 @@ if (!process.env.DATABASE_URL)
 
 const params = url.parse(process.env.DATABASE_URL)
 const [username, password] = params.auth.split(':')
+const ssl =
+  params.hostname === 'localhost' ? false : { rejectUnauthorized: false }
 
 const options = {
   host: params.hostname,
@@ -15,7 +17,7 @@ const options = {
   max: process.env.DATABASE_MAX_CONNECTIONS || 2,
   user: username,
   password,
-  ssl: { rejectUnauthorized: false },
+  ssl,
 }
 
 module.exports = pgp(options)
