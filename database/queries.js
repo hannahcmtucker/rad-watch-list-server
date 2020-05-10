@@ -1,11 +1,9 @@
 const db = require('./db_connections')
 
-const getMovies = () => db.query('SELECT * FROM movies')
+exports.getMovies = () => db.query('SELECT * FROM movies')
 
-const getMovie = (id) =>
+exports.getMovie = (id) =>
   db.query('SELECT * FROM movies WHERE id = $1', [id]).then((user) => user[0])
 
-module.exports = {
-  getMovies,
-  getMovie,
-}
+exports.getUser = (id) =>
+  db.query('SELECT * FROM users WHERE id = $1', [id]).then((user) => user[0])

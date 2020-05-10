@@ -7,7 +7,7 @@ const formatResult = (result) => ({
   imageurl: result.Poster,
 })
 
-const findMovies = async (term) => {
+exports.findMovies = async (term) => {
   const apiKey = process.env.OMDB_API_KEY
   const fetchUrl = `http://www.omdbapi.com/?apikey=${apiKey}&s=${term}`
 
@@ -19,7 +19,7 @@ const findMovies = async (term) => {
   }
 }
 
-const findMovie = async (imdbID) => {
+exports.findMovie = async (imdbID) => {
   const apiKey = process.env.OMDB_API_KEY
   const fetchUrl = `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`
 
@@ -29,9 +29,4 @@ const findMovie = async (imdbID) => {
   } catch (error) {
     throw new Error(`Movie search API error: ${String(error)}`)
   }
-}
-
-module.exports = {
-  findMovies,
-  findMovie,
 }
