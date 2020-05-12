@@ -6,6 +6,7 @@ require('dotenv').config()
 
 const schema = require('./schema')
 const routes = require('./routes')
+const errors = require('./middleware/errors')
 
 app.use(bodyParser.json())
 
@@ -18,5 +19,7 @@ app.use(
     graphiql: true,
   })
 )
+
+app.use(errors)
 
 module.exports = app

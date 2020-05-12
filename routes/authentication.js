@@ -1,12 +1,13 @@
+const { handleAsyncErrors, HttpUnauthorizedError } = require('../utils/errors')
 const { checkUser } = require('../utils/bcrypt')
 
-exports.signIn = async ({ body }, res) => {
+exports.signIn = handleAsyncErrors(async ({ body }, res) => {
   const { id, pw } = body
   const match = await checkUser(id, pw)
   if (match) {
     // TODO send JWT
     res.json(match)
   } else {
-    throw new Error('Password not recongnised')
+    throw new HttpUnauthorizedError('Password not recongnised')
   }
-}
+})

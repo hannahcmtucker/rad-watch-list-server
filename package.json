@@ -8,8 +8,8 @@
     "npm": "^6.13.4"
   },
   "scripts": {
-    "start": "nodemon ./index.js",
-    "start:prod": "node ./index.js",
+    "start": "NODE_ENV=development nodemon ./index.js",
+    "start:prod": "NODE_ENV=production node ./index.js",
     "lint": "eslint --max-warnings 0 './**/*.js'",
     "prettier": "prettier --write *.{js,json,md}"
   },
