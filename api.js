@@ -3,7 +3,7 @@ const axios = require('axios')
 const formatResult = (result) => ({
   title: result.Title,
   year: parseInt(result.Year),
-  imdbID: result.imdbID,
+  imdbid: result.imdbID,
   imageurl: result.Poster,
 })
 
@@ -19,9 +19,9 @@ exports.findMovies = async (term) => {
   }
 }
 
-exports.findMovie = async (imdbID) => {
+exports.findMovie = async (imdbid) => {
   const apiKey = process.env.OMDB_API_KEY
-  const fetchUrl = `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbID}`
+  const fetchUrl = `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbid}`
 
   try {
     const response = await axios.get(fetchUrl)

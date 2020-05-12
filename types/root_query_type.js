@@ -1,16 +1,19 @@
-const graphql = require('graphql')
 const {
   GraphQLObjectType,
   GraphQLList,
-  GraphQLID,
   GraphQLNonNull,
   GraphQLString,
-} = graphql
+} = require('graphql')
+
 const { getMovies, getMovie } = require('../database/queries')
 const { findMovies, findMovie } = require('../api')
 
-const MovieType = require('./movie_type')
-const MovieResultType = require('./movie_result_type')
+const {
+  MovieIdType,
+  ImdbIdType,
+  MovieType,
+  MovieResultType,
+} = require('./movie_types')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -23,7 +26,7 @@ const RootQuery = new GraphQLObjectType({
     },
     getMovie: {
       type: MovieType,
-      args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+      args: { id: { type: MovieIdType } },
       resolve(parentValue, { id }) {
         return getMovie(id)
       },
@@ -37,9 +40,9 @@ const RootQuery = new GraphQLObjectType({
     },
     findMovie: {
       type: MovieResultType,
-      args: { imdbID: { type: new GraphQLNonNull(GraphQLString) } },
-      resolve(parentValue, { imdbID }) {
-        return findMovie(imdbID)
+      args: { imdbid: { type: ImdbIdType } },
+      resolve(parentValue, { imdbid }) {
+        return findMovie(imdbid)
       },
     },
   }),
