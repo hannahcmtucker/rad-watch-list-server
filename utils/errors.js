@@ -23,4 +23,18 @@ class HttpUnauthorizedError extends HttpError {
   }
 }
 
-module.exports = { handleAsyncErrors, HttpUnauthorizedError }
+class HttpBadRequestError extends HttpError {
+  constructor(message = 'Bad Request') {
+    super({
+      message,
+      name: 'HttpBadRequest',
+      statusCode: 400,
+    })
+  }
+}
+
+module.exports = {
+  handleAsyncErrors,
+  HttpUnauthorizedError,
+  HttpBadRequestError,
+}

@@ -1,13 +1,16 @@
-const { handleAsyncErrors, HttpUnauthorizedError } = require('../utils/errors')
-const { checkUser } = require('../utils/bcrypt')
+const { handleAsyncErrors, HttpBadRequestError } = require('../utils/errors')
+const { signIn } = require('../utils/authentication')
 
 exports.signIn = handleAsyncErrors(async ({ body }, res) => {
   const { id, pw } = body
-  const match = await checkUser(id, pw)
-  if (match) {
-    // TODO send JWT
-    res.json(match)
-  } else {
-    throw new HttpUnauthorizedError('Password not recongnised')
-  }
+  // TODO add validation
+  if (!id || !pw) throw new HttpBadRequestError()
+
+  const token = await signIn(id, pw)
+
+  res.cookie('token', token, {
+    secure: process.env.NODE_ENV === 'production',
+    httpOnly: true,
+  })
+  res.send()
 })
