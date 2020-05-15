@@ -14,6 +14,9 @@ exports.getMovieByImdbid = (imdbid) =>
 exports.getUser = (id) =>
   db.query('SELECT * FROM users WHERE id = $1', [id]).then(getFirst)
 
+exports.getUserName = (id) =>
+  db.query('SELECT ID, NAME FROM users WHERE id = $1', [id]).then(getFirst)
+
 exports.addMovie = ({ imdbid, userid, title, imageurl, year }) =>
   db
     .query(

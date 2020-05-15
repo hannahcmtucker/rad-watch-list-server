@@ -4,8 +4,8 @@ const {
   GraphQLNonNull,
   GraphQLString,
 } = require('graphql')
-
-const { getMovies, getMovie } = require('../database/queries')
+const { checkUser } = require('../utils/authentication')
+const { getMovies, getMovie, getUserName } = require('../database/queries')
 const { findMovies, findMovie } = require('../api')
 
 const {
@@ -14,6 +14,7 @@ const {
   MovieType,
   MovieResultType,
 } = require('./movie_types')
+const { UserType } = require('./user_type')
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -43,6 +44,13 @@ const RootQuery = new GraphQLObjectType({
       args: { imdbid: { type: ImdbIdType } },
       resolve(parentValue, { imdbid }) {
         return findMovie(imdbid)
+      },
+    },
+    me: {
+      type: UserType,
+      resolve: async (parentValue, args, { user }) => {
+        await checkUser(user)
+        return getUserName(user.id)
       },
     },
   }),
