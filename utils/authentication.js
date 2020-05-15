@@ -14,3 +14,9 @@ exports.signIn = async (id, pw) => {
 
   return token
 }
+
+exports.checkUser = async (user) => {
+  if (!user) throw new HttpUnauthorizedError('User token not found')
+  const databaseUser = await getUser(user.id)
+  if (!databaseUser) throw new HttpUnauthorizedError('User not found')
+}

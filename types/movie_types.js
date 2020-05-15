@@ -24,6 +24,7 @@ const MovieType = new GraphQLObjectType({
   fields: () => ({
     id: { type: MovieIdType },
     imdbid: { type: ImdbIdType },
+    userid: { type: new GraphQLNonNull(GraphQLID) },
     title: { type: GraphQLString },
     year: { type: GraphQLInt },
     imageurl: { type: GraphQLString },

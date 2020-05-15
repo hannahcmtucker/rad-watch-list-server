@@ -1,7 +1,7 @@
 const { GraphQLObjectType } = require('graphql')
-
+const { checkUser } = require('../utils/authentication')
+const fetchMovie = require('../utils/fetchMovie')
 const { MovieType, ImdbIdType } = require('./movie_types')
-const { findMovie } = require('../api')
 const { addMovie } = require('../database/queries')
 
 const RootMutation = new GraphQLObjectType({
@@ -10,9 +10,10 @@ const RootMutation = new GraphQLObjectType({
     addMovie: {
       type: MovieType,
       args: { imdbid: { type: ImdbIdType } },
-      resolve: async (parentValue, { imdbid }) => {
-        const movie = await findMovie(imdbid)
-        return addMovie({ ...movie })
+      resolve: async (parentValue, { imdbid }, { user }) => {
+        await checkUser(user)
+        const movie = await fetchMovie(imdbid)
+        return addMovie({ ...movie, userid: user.id })
       },
     },
   }),
