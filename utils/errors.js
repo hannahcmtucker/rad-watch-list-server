@@ -33,8 +33,18 @@ class HttpBadRequestError extends HttpError {
   }
 }
 
+class HttpNotFoundError extends HttpError {
+  constructor(message = 'Not Found') {
+    super({
+      message,
+      name: 'HttpNotFound',
+      statusCode: 404,
+    })
+  }
+}
 module.exports = {
   handleAsyncErrors,
   HttpUnauthorizedError,
   HttpBadRequestError,
+  HttpNotFoundError,
 }
